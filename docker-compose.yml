@@ -1,11 +1,11 @@
-version: '3.1'
+version: '3.6'
 
 services:
   proxy:
     image: nginx:alpine
-    expose: 
-      - 80
-      - 443
+    ports: 
+      - 80:80
+      - 443:443
     volumes: 
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
@@ -14,7 +14,7 @@ services:
       - wordpress
     networks: 
       wpapi_network:
-        ipv4_address: 172.28.0.250
+        ipv4_address: 10.0.0.2
 
   wordpress:
     image: wordpress:php7.2-fpm-alpine
@@ -24,15 +24,15 @@ services:
       WORDPRESS_DB_PASSWORD: wppassword
       WORDPRESS_DB_NAME: shopdb
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wpapi
     networks: 
       wpapi_network:
-        ipv4_address: 172.28.0.251
+        ipv4_address: 10.0.0.3
 
   db:
     image: mysql:5.7
-    expose: 
-      - 3306
+    ports: 
+      - 3308:3306
     environment:
       MYSQL_DATABASE: shopdb
       MYSQL_USER: wpuser
@@ -42,7 +42,7 @@ services:
       - db:/var/lib/mysql
     networks: 
       wpapi_network:
-        ipv4_address: 172.28.0.252
+        ipv4_address: 10.0.0.4
 
 volumes:
   wordpress:
@@ -53,4 +53,4 @@ networks:
     ipam:
       driver: default
       config: 
-        - subnet: 172.28.0.0/16
+        - subnet: 10.0.0.0/24
