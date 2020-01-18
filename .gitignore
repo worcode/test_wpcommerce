@@ -145,4 +145,4 @@ wp-content/themes/twenty*/
 
 # End of https://www.gitignore.io/api/node,nuxtjs,wordpress
 
-db
+ssl
