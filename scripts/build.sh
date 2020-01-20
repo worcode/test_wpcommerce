@@ -21,6 +21,11 @@ function createSelfCert {
     sudo openssl req -x509 -nodes -days 365 -subj "/C=TH/ST=BKK/O=Any co, ltd./CN=localhost" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout "${SSL_PATH}/localhost.key" -out "${SSL_PATH}/localhost.crt"
 }
 
+function createAsymmeticJwt {
+    ssh-keygen -t rsa -b 4096 -m PEM -f "${SCRIPT_PATH}/../ssl/jwtRS256.key"
+    openssl rsa -in "${SCRIPT_PATH}/../ssl/jwtRS256.key" -pubout -outform PEM -out "${SCRIPT_PATH}/../ssl/jwtRS256.key.pub"
+}
+
 function buildProxy {
     command -v docker || fail "docker is not found !"
 
@@ -28,4 +33,5 @@ function buildProxy {
 }
 
 createSelfCert
+createAsymmeticJwt
 buildProxy

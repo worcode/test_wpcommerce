@@ -11,6 +11,8 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./ssl/localhost.crt:/etc/ssl/certs/localhost.crt
       - ./ssl/localhost.key:/etc/ssl/private/localhost.key
+      - ./ssl/jwtRS256.key.pub:/etc/ssl/certs/jwtRS256.key.pub
+      - ./ssl/jwtRS256.key:/etc/ssl/private/jwtRS256.key
       - wordpress:/var/www/html
     links: 
       - wordpress
