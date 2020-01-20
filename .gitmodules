@@ -1,0 +1,3 @@
+[submodule "frontstore"]
+	path = frontstore
+	url = git@github.com:worcode/test_upsell_perfume.git
