@@ -1,6 +1,13 @@
 version: '3.6'
 
 services:
+  # for php debugging
+  # php:
+  #   image: php:fpm-alpine
+  #   container_name: php-debug
+  #   ports: 
+  #     - 9001:9000
+
   proxy:
     image: wpapi-proxy
     ports: 
@@ -29,6 +36,7 @@ services:
       WORDPRESS_DB_NAME: shopdb
     volumes:
       - wordpress:/var/www/html
+      - ./wp_config/phpupload.ini:/usr/local/etc/php/conf.d/phpupload.ini
     networks: 
       wpapi_network:
         ipv4_address: 10.0.0.3
